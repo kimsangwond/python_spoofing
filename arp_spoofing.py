@@ -12,6 +12,8 @@ from uuid import getnode as get_mac
 import argparse
 import binascii
 import ifaddr
+from scapy.all import*
+import netifaces
 
 if __name__ == '__main__':
 	adapters = ifaddr.get_adapters()
@@ -22,6 +24,8 @@ if __name__ == '__main__':
 
 	conf.iface= input('input nic: ')
 
-	print(socket.gethostbyname(socket.gethostname())
-	attackerIP= input('attacker IP: ')
+	print(netifaces.gateways())
+
+	attackerIP= socket.gethostbyname(socket.gethostname())
+	gatewayIP= attackerIP[:-1]+str(1)
 	victimIP= input('victim IP: ')
