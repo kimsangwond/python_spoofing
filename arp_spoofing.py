@@ -15,6 +15,13 @@ import ifaddr
 from scapy.all import*
 import netifaces
 
+def vicMac(attackerIP,attackerMac,ipfind)
+	while True:
+		Send
+
+
+
+
 if __name__ == '__main__':
 	adapters = ifaddr.get_adapters()
 	for adapter in adapters:
