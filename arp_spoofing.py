@@ -15,10 +15,14 @@ import ifaddr
 from scapy.all import*
 import netifaces
 
-def vicMac(attackerIP,attackerMac,ipfind)
+def vicMac(attackerIP,attackerMac,ip):
 	while True:
-		Send
+		#Sendsocket= socket(PF_INET, SOCK_RAW, htons(0x0800))
 
+		Sendsocket=socket(PF_PACKET, SOCK_RAW, htons(0x0800))
+		sor_mac=attackerMac
+		sor_ip=attackerIP
+		dest_mac
 
 
 
