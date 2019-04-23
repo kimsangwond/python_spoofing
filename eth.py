@@ -2,10 +2,10 @@ import struct
 
 class Eth:
   def __init__( self, raw=None ):
-  if raw != None:
-    self._dst = raw[:6]
-    self._src = raw[6:12]
-    self._type = raw[12:14]
+    if raw != None:
+      self._dst = raw[:6]
+      self._src = raw[6:12]
+      self._type = raw[12:14]
 
   @property
   def header( self ):

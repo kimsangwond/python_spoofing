@@ -1,8 +1,8 @@
-from ip import *
-from udp import *
-from arp import *
-from eth import *
-
+'''
+from header.ip import *
+from header.udp import *
+from header.arp import *
+'''
 
 class Packet:
 
